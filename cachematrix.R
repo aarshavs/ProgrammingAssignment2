@@ -1,15 +1,27 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
-
-makeCacheMatrix <- function(x = matrix()) {
-
+## set the input x as a matrix and then set the solved value "a" as a null
+## then changed every reference to "mean" to "solve"
+makeCacheMatrix <- function(x = matrix(sample(1:100,9),3,3)) {
+  a <- NULL
+  set <- function(y) {
+    x <<- y
+    a <<- NULL
+  }
+  get <- function() x
+  setsolve <- function(solve) s <<- solve
+  getsolve <- function() a
+  list(set = set, get = get,
+       setsolve = setsolve,
+       getsolve = getsolve)
 }
-
-
-## Write a short comment describing this function
-
+## changed "mean" to "solve" and "m" to "a"
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  a <- x$getsolve()
+  if(!is.null(a)) {
+    message("getting inversed matrix")
+    return(a)
+  }
+  data <- x$get()
+  a <- solve(data, ...)
+  x$setsolve(a)
+  a
 }
